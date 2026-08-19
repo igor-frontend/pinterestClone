@@ -1,29 +1,41 @@
 import requestRandom from "./apiRandom.js"
 
-let input = document.querySelector("#input>input");
-
 const createGridRandom = async() =>{
+    let input = document.querySelector("#input>input");
+    const query = input ? input.value : "";
+
     let gridContainer = document.createElement("main");
-    const data = await requestRandom(input.value);
-    for (let i = 0;i<data.length;i++){
+    const data = await requestRandom(query);
+    if (!data || !Array.isArray(data)) return;
+
+    for (let i = 0; i < data.length; i++){
         const div = document.createElement("div");
-        div.className="grid-element";
+        div.className = "grid-element";
+
+        const foto = data[i];
+        const fecha = new Date(foto.created_at).toLocaleDateString("es-ES", {
+            day: "numeric", month: "short", year: "numeric"
+        });
+
+        div.innerHTML = `
+            <div class="img-wrapper">
+                <img src="${foto.urls.regular}" alt="image">
+                <div class="grid-hover-overlay">
+                    <a href="${foto.links.html}" target="_blank" class="btn-visitar">Visitar</a>
+                    <div class="hover-stats">
+                        <span>👁️ ${foto.views || 0}</span>
+                        <span>❤️ ${foto.likes}</span>
+                    </div>
+                </div>
+            </div>
+            <img src="${foto.user.profile_image.small}" class="avatar">
+            <p class="username">${foto.user.name}</p>
+            <p class="likes">${foto.likes} likes</p>
+            <p class="upload-date">${fecha}</p>
+        `;
         gridContainer.appendChild(div);
-        const img = document.createElement("img");
-        img.src = data[i].urls.regular;
-        div.appendChild(img);
-        const avatar = document.createElement("img");
-        avatar.src = data[i].user.profile_image.small;
-        avatar.className = "avatar";
-        div.appendChild(avatar)
-        const username = document.createElement("p");
-        username.textContent = data[i].user.name;
-        div.appendChild(username);
-        const likes = document.createElement("p");
-        likes.textContent = `${data[i].likes} likes`;
-        div.appendChild(likes);
     }
-    document.body.appendChild(gridContainer)
+    document.body.appendChild(gridContainer);
 }
 
-export default createGridRandom
+export default createGridRandom;
