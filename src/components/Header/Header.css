@@ -1,0 +1,122 @@
+.pinterest-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-small);
+    width: 100%;
+    padding: 12px var(--spacing-medium);
+    background-color: var(--bg-white);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-small);
+}
+
+.logo-btn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn {
+    border: none;
+    border-radius: var(--border-radius-btn);
+    padding: 12px var(--spacing-medium);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color var(--transition-fast);
+}
+
+.btn-dark {
+    background-color: var(--bg-dark);
+    color: var(--bg-white);
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    height: 48px;
+    max-width: 100%;
+    padding: 0 var(--spacing-medium);
+    border-radius: var(--border-radius-btn);
+    background-color: var(--bg-input);
+    transition: background-color var(--transition-fast);
+}
+
+.search-form:hover, .search-form:focus-within {
+    background-color: var(--bg-input-hover);
+}
+
+.search-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.search-input {
+    width: 100%;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--primary-text-color);
+    font-size: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.profile-btn:hover {
+    background-color: var(--bg-hover-ghost);
+}
+
+@media (max-width: 850px) {
+    .nav-links {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .pinterest-header {
+        padding: 8px;
+    }
+    .search-form {
+        height: 40px;
+        margin: 0 4px;
+    }
+}

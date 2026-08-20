@@ -1,15 +1,21 @@
-const API_KEY = 'rdZOXl6t8zb7Rk-Vnbz7jkq1HkVNuGRXauyq4i3fg3w';
+const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
-const request = async (searched) =>{
+const requestImages = async (query = "") => {
+    const url = query
+        ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=20&client_id=${ACCESS_KEY}`
+        : `https://api.unsplash.com/photos/random?count=20&client_id=${ACCESS_KEY}`;
+
     try {
-        const fetchAPI = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(searched)}&per_page=20&client_id=${API_KEY}`);
-        const data = await fetchAPI.json();
-        console.log("STATUS:", fetchAPI.status);
-        console.log("DATA:", data);
-        return data
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        const data = await response.json();
+        return query ? (data.results || []) : (data || []);
     } catch (error) {
-        console.error("Error en fetch:", error);
+        console.error("Fallo crítico en la llamada de red Unsplash:", error);
+        throw error;
     }
-}
+};
 
-export default request
+export default requestImages;
